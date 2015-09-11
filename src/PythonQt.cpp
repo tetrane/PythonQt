@@ -1440,6 +1440,8 @@ PythonQtPrivate::PythonQtPrivate()
   _hadError = false;
   _systemExitExceptionHandlerEnabled = false;
   _debugAPI = new PythonQtDebugAPI(this);
+
+  PythonQtArgumentFrame::cleanupFreeList();
 }
 
 void PythonQtPrivate::setupSharedLibrarySuffixes()
