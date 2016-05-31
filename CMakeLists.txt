@@ -272,6 +272,7 @@ set(headers
     src/PythonQtUtils.h
     src/PythonQtVariants.h
     src/PythonQtPythonInclude.h
+    src/gui/PythonQtScriptingConsole.cpp
     generated_cpp${generated_cpp_suffix}/PythonQt_QtBindings.h
 )
 
