@@ -128,7 +128,7 @@ endif()
 if(PythonQt_QT_VERSION VERSION_GREATER "4")
 
   # Required components
-  set(qt_required_components Core Widgets)
+  set(qt_required_components Core Widgets PrintSupport)
   foreach(qtlib ${qtlibs})
     set(qt_wrapped_lib ${qtlib_to_wraplib_${qtlib}})
     if(${PythonQt_Wrap_Qt${qt_wrapped_lib}})
