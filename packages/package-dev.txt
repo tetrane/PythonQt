@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 2.8)
+
+set(INSTALL_HEADERS "@headers@")
+
+set(VERSION_MAJOR "3")
+set(VERSION_MINOR "0")
+set(VERSION_PATCH "0")
+
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+set(CPACK_DEBIAN_PACKAGE_SECTION "libs")
+set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://sourceforge.net/projects/pythonqt/")
+set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Dynamic Python binding for the Qt framework - runtime")
+
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "reven-libpythonqt3.0 (>= 3.0.0)")
+set(CPACK_DEBIAN_PACKAGE_CONFLICTS "libpythonqt3.0-dev, libpythonqt-dev")
+set(CPACK_DEBIAN_PACKAGE_REPLACES "libpythonqt3.0-dev, libpythonqt-dev")
+set(CPACK_DEBIAN_PACKAGE_PROVIDES "libpythonqt3.0-dev, libpythonqt-dev")
+
+set(CPACK_DEBIAN_PACKAGE_NAME "reven-libpythonqt${VERSION_MAJOR}.${VERSION_MINOR}-dev")
+set(CPACK_DEBIAN_PACKAGE_VERSION "3.0.0qt~git6")
+set(CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
+set(CPACK_PACKAGE_FILE_NAME "reven-libpythonqt_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}-dev_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
+
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "support@tetrane.fr")
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_SET_DEST_DIR "on")
+set(CPACK_PACKAGING_INSTALL_PREFIX "/usr/")
+
+install(PROGRAMS ../../libPythonQt.so DESTINATION lib)
+install(FILES ${INSTALL_HEADERS} DESTINATION include/PythonQt)
+
+include(CPack)

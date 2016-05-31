@@ -248,32 +248,32 @@ set(sources
 # List headers.  This is list is used for the install command.
 
 set(headers
-    src/PythonQtBoolResult.h
-    src/PythonQtClassInfo.h
-    src/PythonQtClassWrapper.h
-    src/PythonQtConversion.h
-    src/PythonQtCppWrapperFactory.h
-    src/PythonQtDoc.h
-    src/PythonQt.h
-    src/PythonQtImporter.h
-    src/PythonQtImportFileInterface.h
-    src/PythonQtInstanceWrapper.h
-    src/PythonQtMethodInfo.h
-    src/PythonQtMisc.h
-    src/PythonQtObjectPtr.h
-    src/PythonQtQFileImporter.h
-    src/PythonQtSignalReceiver.h
-    src/PythonQtSlot.h
-    src/PythonQtSignal.h
-    src/PythonQtStdDecorators.h
-    src/PythonQtStdIn.h
-    src/PythonQtStdOut.h
-    src/PythonQtSystem.h
-    src/PythonQtUtils.h
-    src/PythonQtVariants.h
-    src/PythonQtPythonInclude.h
-    src/gui/PythonQtScriptingConsole.cpp
-    generated_cpp${generated_cpp_suffix}/PythonQt_QtBindings.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtBoolResult.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtClassInfo.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtClassWrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtConversion.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtCppWrapperFactory.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtDoc.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQt.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtImporter.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtImportFileInterface.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtInstanceWrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtMethodInfo.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtMisc.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtObjectPtr.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtQFileImporter.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtSignalReceiver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtSlot.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtSignal.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtStdDecorators.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtStdIn.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtStdOut.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtSystem.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtUtils.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtVariants.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PythonQtPythonInclude.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/PythonQtScriptingConsole.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/generated_cpp${generated_cpp_suffix}/PythonQt_QtBindings.h
 )
 
 #-----------------------------------------------------------------------------
@@ -341,6 +341,8 @@ set_target_properties(PythonQt PROPERTIES DEFINE_SYMBOL PYTHONQT_EXPORTS)
 #
 set_target_properties(PythonQt  PROPERTIES
   INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+  VERSION 3.0.0
+  SOVERSION 3.0
   )
 
 target_link_libraries(PythonQt
@@ -402,3 +404,23 @@ if(BUILD_TESTING)
     )
 endif()
 
+# Package run:
+set(BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/packages/run)
+configure_file(packages/package-run.txt ${BUILD_DIR}/CMakeLists.txt @ONLY)
+add_custom_target(package-run
+                    COMMAND ${CMAKE_COMMAND} .
+                    COMMAND ${CMAKE_CPACK_COMMAND} -G DEB
+                    COMMAND cp *.deb ${PROJECT_BINARY_DIR}
+                    WORKING_DIRECTORY ${BUILD_DIR})
+
+# Package dev:
+set(BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/packages/dev)
+configure_file(packages/package-dev.txt ${BUILD_DIR}/CMakeLists.txt @ONLY)
+add_custom_target(package-dev
+                    COMMAND ${CMAKE_COMMAND} .
+                    COMMAND ${CMAKE_CPACK_COMMAND} -G DEB
+                    COMMAND cp *.deb ${PROJECT_BINARY_DIR}
+                    WORKING_DIRECTORY ${BUILD_DIR})
+
+# All packages
+add_custom_target(deb DEPENDS package-run package-dev)
