@@ -343,6 +343,7 @@ set_target_properties(PythonQt  PROPERTIES
   INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib"
   VERSION 3.0.0
   SOVERSION 3.0
+  SUFFIX _qt5.so
   )
 
 target_link_libraries(PythonQt
