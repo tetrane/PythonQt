@@ -273,12 +273,9 @@ bool PythonQtClassInfo::lookForEnumAndCache(const QMetaObject* meta, const char*
   int enumCount = meta->enumeratorCount();
   for (int i=0;i<enumCount; i++) {
     QMetaEnum e = meta->enumerator(i);
-    if (_cachedMembers.contains(memberName)) {
-  #ifdef PYTHONQT_DEBUG
-      std::cout << "cached enum " << memberName << " on " << meta->className()  << std::endl;
-  #endif
-      continue;
-      }
+    // we do not want flags, they will cause our values to appear two times
+    if (e.isFlag()) continue;
+    
     for (int j=0; j < e.keyCount(); j++) {
       if (qstrcmp(e.key(j), memberName)==0) {
         PyObject* enumType = findEnumWrapper(e.name());
@@ -539,6 +536,9 @@ QStringList PythonQtClassInfo::memberList()
     for (int i = 0; i<meta->enumeratorCount(); i++) {
       QMetaEnum e = meta->enumerator(i);
       l << e.name();
+      // we do not want flags, they will cause our values to appear two times
+      if (e.isFlag()) continue;
+
       for (int j=0; j < e.keyCount(); j++) {
         l << QString(e.key(j));
       }
