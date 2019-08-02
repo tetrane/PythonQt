@@ -18,7 +18,6 @@
 #include <qmimedata.h>
 #include <qobject.h>
 #include <qsize.h>
-#include <qtsqlglobal.h>
 #include <qsqldatabase.h>
 #include <qsqldriver.h>
 #include <qsqlerror.h>
