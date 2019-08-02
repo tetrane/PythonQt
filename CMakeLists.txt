@@ -312,7 +312,10 @@ add_library(PythonQt SHARED
             ${sources}
             ${gen_moc_sources}
   )
-set_target_properties(PythonQt PROPERTIES DEFINE_SYMBOL PYTHONQT_EXPORTS)
+set_target_properties(PythonQt PROPERTIES
+    DEFINE_SYMBOL PYTHONQT_EXPORTS
+    SUFFIX _qt5.so
+    )
 
 target_compile_options(PythonQt PRIVATE
   $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
