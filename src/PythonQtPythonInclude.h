@@ -35,7 +35,6 @@
 
 // Undefine macros that Python.h defines to avoid redefinition warning.
 #undef _POSIX_C_SOURCE
-#undef _POSIX_THREADS
 #undef _XOPEN_SOURCE
 
 // Undefine Qt keywords that conflict with Python headers
